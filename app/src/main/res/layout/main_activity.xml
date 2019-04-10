@@ -5,30 +5,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout android:layout_width="0dp" android:layout_height="0dp"
+    <LinearLayout android:layout_width="0dp"
+                  android:layout_height="0dp"
                   app:layout_constraintTop_toTopOf="parent"
                   app:layout_constraintBottom_toBottomOf="parent"
                   app:layout_constraintStart_toStartOf="parent"
-                  app:layout_constraintEnd_toStartOf="@id/customKeyboard"
+                  app:layout_constraintEnd_toStartOf="@id/newCustomKeyboard"
                   android:orientation="vertical"
                   android:id="@+id/linearLayout">
 
         <EditText
-                android:id="@+id/edit_text"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-        <com.example.talaie.custom_keyboard.PinEntryEditText
-                android:id="@+id/pin_edit_text"
+                android:id="@+id/mEditText"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
 
     </LinearLayout>
 
-    <com.example.talaie.custom_keyboard.CustomKeyboard
-            android:id="@+id/customKeyboard"
+    <com.example.talaie.custom_keyboard.NewCustomKeyboard
+            android:id="@+id/newCustomKeyboard"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="20dp"

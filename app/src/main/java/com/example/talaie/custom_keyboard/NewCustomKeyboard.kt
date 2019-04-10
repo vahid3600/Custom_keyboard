@@ -16,7 +16,7 @@ import android.text.InputType
 import kotlinx.android.synthetic.main.custom_keyboard.view.*
 
 
-class CustomKeyboard : LinearLayout, View.OnClickListener {
+class NewCustomKeyboard : LinearLayout, View.OnClickListener, View.OnLongClickListener {
 
     constructor(context: Context) : super(context)
 
@@ -39,7 +39,12 @@ class CustomKeyboard : LinearLayout, View.OnClickListener {
     )
 
     val view: View
-    lateinit var editTextList: ArrayList<EditText>
+    var string: String = ""
+    private var keyboardListener: KeyboardListener? = null
+
+    fun initCustomKeyboard(keyboardListener: KeyboardListener?) {
+        this.keyboardListener = keyboardListener
+    }
 
     companion object {
         val TAG = "CustomKeyboard"
@@ -55,7 +60,6 @@ class CustomKeyboard : LinearLayout, View.OnClickListener {
 
         initViews()
 
-        editTextList = ArrayList()
         Log.e("CustomKeyboard", "init " + super.getChildCount() + " " + view.height)
         super.addView(view)
 
@@ -80,22 +84,7 @@ class CustomKeyboard : LinearLayout, View.OnClickListener {
         view.nine.setOnClickListener(this)
         view.zero.setOnClickListener(this)
         view.delete.setOnClickListener(this)
-    }
-
-    fun editTextInit(editText: EditText) {
-        editTextList.add(editText)
-
-        disableSoftInputFromAppearing(editText)
-//        editText.onFocusChangeListener = OnFocusChangeListener { v, hasFocus ->
-//            Log.e(TAG, "onFocusChange")
-//        }
-//
-//        editText.setOnClickListener(object : OnClickListener {
-//            override fun onClick(v: View?) {
-//                Log.e(TAG, "OnClickListener")
-//            }
-//
-//        })
+        view.delete.setOnLongClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -116,52 +105,26 @@ class CustomKeyboard : LinearLayout, View.OnClickListener {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun writeText(string: String) {
-
-        for (editText: EditText in editTextList) {
-            if (editText.hasFocus()) {
-
-                val cursorPosition = editText?.selectionStart
-                val beforeCursorString = editText?.selectionEnd?.let { editText?.text?.substring(0, it) }
-                val afterCursorString = editText?.selectionEnd?.let {
-                    editText?.text?.length?.let { it1 -> editText?.text?.substring(it, it1) }
-                }
-
-                editText?.setText(
-                    beforeCursorString +
-                            string +
-                            afterCursorString
-                )
-                cursorPosition?.let { editText?.setSelection(it + 1) }
-            }
+    override fun onLongClick(v: View?): Boolean {
+        when(v?.id){
+            delete.id -> deleteAllText()
         }
+        return true
     }
 
-    @SuppressLint("SetTextI18n")
+    private fun deleteAllText() {
+        this.string = ""
+        keyboardListener?.textChanged(this.string)
+    }
+
+    private fun writeText(string: String) {
+        this.string += string
+        keyboardListener?.textChanged(this.string)
+    }
+
     private fun deleteText() {
-
-        for (editText: EditText in editTextList) {
-            if (editText.hasFocus()) {
-
-                val cursorPosition = editText?.selectionStart
-                var beforeCursorString: String? = ""
-                var afterCursorString: String? = ""
-                if (cursorPosition != 0)
-                    beforeCursorString = editText?.selectionEnd?.let { editText?.text?.substring(0, it - 1) }
-                if (cursorPosition != 0)
-                    afterCursorString = editText?.selectionEnd?.let {
-                        editText?.text?.length?.let { it1 -> editText?.text?.substring(it, it1) }
-                    }
-
-                editText?.setText(
-                    beforeCursorString +
-                            afterCursorString
-                )
-                if (cursorPosition != 0)
-                    cursorPosition?.let { editText?.setSelection(it - 1) }
-            }
-        }
+        this.string = this.string.substring(0, this.string.length - 1)
+        keyboardListener?.textChanged(this.string)
     }
 
     private fun disableSoftInputFromAppearing(editText: EditText) {

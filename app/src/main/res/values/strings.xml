@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">custom-keyboard</string>
-    <string name="one">1</string>
-    <string name="zero">0</string>
-    <string name="two">2</string>
-    <string name="three">3</string>
-    <string name="four">4</string>
-    <string name="five">5</string>
-    <string name="six">6</string>
-    <string name="seven">7</string>
-    <string name="eight">8</string>
-    <string name="nine">9</string>
+    <string name="one">۱</string>
+    <string name="zero">۰</string>
+    <string name="two">۲</string>
+    <string name="three">۳</string>
+    <string name="four">۴</string>
+    <string name="five">۵</string>
+    <string name="six">۶</string>
+    <string name="seven">۷</string>
+    <string name="eight">۸</string>
+    <string name="nine">۹</string>
     <string name="delete">delete</string>
     <string name="enter">enter</string>
 </resources>

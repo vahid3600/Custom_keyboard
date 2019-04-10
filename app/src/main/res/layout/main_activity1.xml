@@ -25,7 +25,7 @@
             app:layout_constraintBottom_toTopOf="@+id/customKeyboard"
     />
 
-    <com.example.talaie.custom_keyboard.CustomKeyboard
+    <com.example.talaie.custom_keyboard.NewCustomKeyboard
             android:id="@+id/customKeyboard"
             android:layout_width="0dp"
             android:layout_height="0dp"
